@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import com.lardi.validator.RecordValidator;
 import com.lardi.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,18 +36,21 @@ public class PhoneBookController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("records", recordService.findAll());
+        model.addAttribute("records", recordService.findAllRecordsCurrentUser());
         model.addAttribute("record", new Record());
         return "index";
     }
 
     @RequestMapping(path = "/save", method = RequestMethod.POST)
     public String createRecord(@Valid @ModelAttribute Record record, BindingResult bindingResult, Model model) {
+
         recordValidator.validate(record,bindingResult);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("records", recordService.findAll());
+            model.addAttribute("records", recordService.findAllRecordsCurrentUser());
             return "index";
         }
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        record.setUser(user);
         recordService.save(record);
         return "redirect:/";
     }

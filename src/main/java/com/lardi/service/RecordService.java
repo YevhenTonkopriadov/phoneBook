@@ -1,10 +1,16 @@
 package com.lardi.service;
 
+import com.lardi.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.lardi.model.Record;
 import com.lardi.repository.RecordRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RecordService {
@@ -18,6 +24,12 @@ public class RecordService {
 
     public Iterable<Record> findAll() {
         return recordRepository.findAll();
+    }
+
+    public List<Record> findAllRecordsCurrentUser() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ArrayList<Record> records = (ArrayList<Record>) recordRepository.findAll();
+        return records.stream().filter(e->e.getUser().equals(user)).collect(Collectors.toList());
     }
 
     public void delete(Long id){recordRepository.delete(id);}

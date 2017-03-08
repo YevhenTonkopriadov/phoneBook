@@ -1,12 +1,8 @@
 package com.lardi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -16,6 +12,10 @@ public class Record {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id")
+    private User user;
 
     @Pattern(regexp = "^[A-Za-z]+$")
     @Size(min=4, max = 20)
@@ -109,6 +109,15 @@ public class Record {
 
     public Record setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Record setUser(User user) {
+        this.user = user;
         return this;
     }
 
