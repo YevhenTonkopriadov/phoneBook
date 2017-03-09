@@ -7,6 +7,7 @@ import com.lardi.model.Record;
 
 @Repository
 public interface RecordRepository extends PagingAndSortingRepository<Record, Long> {
+
     @Override
     void delete(Long id);
 

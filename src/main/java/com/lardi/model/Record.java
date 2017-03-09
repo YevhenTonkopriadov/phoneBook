@@ -6,15 +6,15 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+
 @Entity
 public class Record {
-
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id")
+    @ManyToOne(optional=false, fetch=FetchType.LAZY)
+    @JoinColumn(name="id",referencedColumnName="id", insertable=false , updatable=false)
     private User user;
 
     @Pattern(regexp = "^[A-Za-z]+$")
@@ -39,6 +39,7 @@ public class Record {
 
     @Email
     private String email;
+
 
     public Long getId() {
         return id;
