@@ -30,8 +30,7 @@ public class SeveInDataBaseRecords implements RecordRepository {
 
     @Override
     public Record save(Record record) {
-        Session session = factory.getCurrentSession();
-        factory.getCurrentSession().save(record);
+        factory.getCurrentSession().saveOrUpdate(record);
         return record;
     }
 

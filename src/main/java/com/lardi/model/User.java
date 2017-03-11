@@ -117,26 +117,15 @@ public class User implements UserDetails, Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
-
         User user = (User) o;
-
-        if (getId() != null ? !getId().equals(user.getId()) : user.getId() != null) return false;
-        if (!getFio().equals(user.getFio())) return false;
-        if (!getUsername().equals(user.getUsername())) return false;
-        if (!getPassword().equals(user.getPassword())) return false;
-        if (getConfirmPassword() != null ? !getConfirmPassword().equals(user.getConfirmPassword()) : user.getConfirmPassword() != null)
-            return false;
-        return getRecords() != null ? getRecords().equals(user.getRecords()) : user.getRecords() == null;
+        return this.getUsername().equals(user.getUsername());
     }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + getFio().hashCode();
-        result = 31 * result + getUsername().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + (getConfirmPassword() != null ? getConfirmPassword().hashCode() : 0);
-        result = 31 * result + (getRecords() != null ? getRecords().hashCode() : 0);
+        int result = getFio().hashCode();
+        result = result + getUsername().hashCode();
+        result = result + getPassword().hashCode();
         return result;
     }
 }

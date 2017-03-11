@@ -19,7 +19,6 @@ public class RecordService {
     private RecordRepository recordRepository;
 
     public Record save(Record record) {
-        recordRepository.delete(record.getId());
         return recordRepository.save(record);
     }
 

@@ -24,9 +24,24 @@ public class SaveInFileRecords implements RecordRepository {
     public Record save(Record record) {
         int size = records.size();
         if (size!=0) {
+            record.setId(new Long(1));
+            records.add(record);
+            wrire(fileName,records);
+            return  record;
+        }
+        ArrayList <Record> tempRecords = new ArrayList<>();
+        for (Record tempRecord: records) {
+            if (!record.getId().equals(tempRecord.getId())){
+                tempRecords.add(tempRecord);
+            }
+        }
+        records=tempRecords;
+        tempRecords=null;
+        size = records.size();
+        if (size!=0) {
             record.setId(records.get(size-1).getId()+1);
         } else{
-            record.setId((long)1);
+            record.setId(new Long(1));
         }
         records.add(record);
         wrire(fileName,records);
