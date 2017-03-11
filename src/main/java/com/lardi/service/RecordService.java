@@ -19,6 +19,7 @@ public class RecordService {
     private RecordRepository recordRepository;
 
     public Record save(Record record) {
+        recordRepository.delete(record.getId());
         return recordRepository.save(record);
     }
 
@@ -30,6 +31,7 @@ public class RecordService {
        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return recordRepository.findByUser(user);
     }
+
     public void delete(Long id){recordRepository.delete(id);}
 
     public  Record  findOne(Long id){return recordRepository.findOne(id);}

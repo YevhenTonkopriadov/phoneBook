@@ -36,7 +36,7 @@ public class PhoneBookController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("records", recordService.findAll());
+        model.addAttribute("records", recordService.findAllRecordsCurrentUser());
         model.addAttribute("record", new Record());
         return "index";
     }
@@ -54,6 +54,7 @@ public class PhoneBookController {
         recordService.save(record);
         return "redirect:/";
     }
+
     @RequestMapping(path = "/addUser", method = RequestMethod.POST)
     public String createRecord(@Valid  @ModelAttribute User user, BindingResult bindingResult) {
         userValidator.validate(user,bindingResult);
