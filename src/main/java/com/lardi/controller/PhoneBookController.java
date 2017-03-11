@@ -36,7 +36,7 @@ public class PhoneBookController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("records", recordService.findAllRecordsCurrentUser());
+        model.addAttribute("records", recordService.findAll());
         model.addAttribute("record", new Record());
         return "index";
     }
