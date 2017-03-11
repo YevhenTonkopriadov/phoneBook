@@ -10,12 +10,12 @@ import javax.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 @Entity
 public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable=false)
     private Long id;
 
     @Size (min =5, max =255)
@@ -32,8 +32,9 @@ public class User implements UserDetails, Serializable {
     @Transient
     private String confirmPassword;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private Set <Record> records =  new HashSet<>();
+    @OneToMany(fetch=FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Set<Record> records =  new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

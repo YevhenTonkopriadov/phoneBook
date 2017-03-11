@@ -26,12 +26,10 @@ public class RecordService {
         return recordRepository.findAll();
     }
 
-    public List<Record> findAllRecordsCurrentUser() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ArrayList<Record> records = (ArrayList<Record>) recordRepository.findAll();
-        return records.stream().filter(e->e.getUser().equals(user)).collect(Collectors.toList());
+    public Iterable<Record> findAllRecordsCurrentUser() {
+       User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return recordRepository.findByUser(user);
     }
-
     public void delete(Long id){recordRepository.delete(id);}
 
     public  Record  findOne(Long id){return recordRepository.findOne(id);}

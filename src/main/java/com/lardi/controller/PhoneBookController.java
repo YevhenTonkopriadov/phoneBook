@@ -81,7 +81,7 @@ public class PhoneBookController {
     }
     @RequestMapping("/edit/{id}")
     public String editPerson(@PathVariable("id") Long id, Model model){
-        model.addAttribute("records", recordService.findAll());
+        model.addAttribute("records", recordService.findAllRecordsCurrentUser());
         model.addAttribute("record",recordService.findOne(id));
         return "index";
     }

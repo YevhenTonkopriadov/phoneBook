@@ -13,8 +13,7 @@ public class Record {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(optional=false, fetch=FetchType.LAZY)
-    @JoinColumn(name="id",referencedColumnName="id", insertable=false , updatable=false)
+    @ManyToOne(fetch=FetchType.LAZY)
     private User user;
 
     @Pattern(regexp = "^[A-Za-z]+$")
