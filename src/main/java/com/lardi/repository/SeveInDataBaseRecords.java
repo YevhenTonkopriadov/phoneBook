@@ -34,7 +34,6 @@ public class SeveInDataBaseRecords implements RecordRepository {
         return record;
     }
 
-    @Override
     public Iterable<Record> findAll() {
         Session session = factory.getCurrentSession();
         Query query = session.createQuery("from " + Record.class.getName());
@@ -54,5 +53,14 @@ public class SeveInDataBaseRecords implements RecordRepository {
     public Record findOne(Long id) {
         Record record = (Record) factory.getCurrentSession().load(Record.class,id);
         return record;
+    }
+
+    @Override
+    public Iterable<Record> filteredRecordsCurrentUser(String findText, User user) {
+        Session session = factory.getCurrentSession();
+        Query query = session.createQuery("from Record where user=:user and name like :findText or user=:user and lastname like :findText or user=:user and phone like :findText" );
+        query.setParameter("user", user);
+        query.setParameter("findText", "%"+findText+"%");
+        return query.list();
     }
 }

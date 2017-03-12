@@ -80,6 +80,17 @@
     </c:forEach>
 </table>
 <br>
+<spring:form method="POST" commandName="text" action="/filteredRecords">
+    <table>
+        <tr>
+            <td><spring:label path="findText"> Entered word (number) or same word's (numbers) divided with space what you want search:</spring:label></td>
+            <td><spring:input path="findText"/></td>
+        </tr>
+    </table>
+    <div>
+        <button type="submit">Find</button>
+    </div>
+</spring:form>
 <spring:form method="POST" action="/logout">
         <button type="submit">Logout</button>
 </spring:form>

@@ -1,7 +1,10 @@
 package com.lardi.controller;
 
-import javax.validation.Valid;
-
+import com.lardi.model.Record;
+import com.lardi.model.Text;
+import com.lardi.model.User;
+import com.lardi.service.RecordService;
+import com.lardi.service.UserService;
 import com.lardi.validator.RecordValidator;
 import com.lardi.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.lardi.model.Record;
-import com.lardi.service.RecordService;
-
-import com.lardi.model.User;
-import com.lardi.service.UserService;
+import javax.validation.Valid;
 
 @Controller
 public class PhoneBookController {
@@ -38,6 +37,7 @@ public class PhoneBookController {
     public String index(Model model) {
         model.addAttribute("records", recordService.findAllRecordsCurrentUser());
         model.addAttribute("record", new Record());
+        model.addAttribute("text", new Text());
         return "index";
     }
 
@@ -47,6 +47,7 @@ public class PhoneBookController {
         recordValidator.validate(record,bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("records", recordService.findAllRecordsCurrentUser());
+            model.addAttribute("text", new Text());
             return "index";
         }
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -84,6 +85,13 @@ public class PhoneBookController {
     public String editPerson(@PathVariable("id") Long id, Model model){
         model.addAttribute("records", recordService.findAllRecordsCurrentUser());
         model.addAttribute("record",recordService.findOne(id));
+        model.addAttribute("text", new Text());
         return "index";
+    }
+
+    @RequestMapping(path = "/filteredRecords", method = RequestMethod.POST)
+    public String filteredRecords(Text fiedText, Model model) {
+        model.addAttribute("records", recordService.filteredRecordsCurrentUser(fiedText.getFindText()));
+        return "filteredRecords";
     }
 }

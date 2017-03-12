@@ -36,7 +36,6 @@ public class SaveInFileRecords implements RecordRepository {
         return  record;
     }
 
-    @Override
     public Iterable<Record> findAll() {
         records = read(fileName);
         return records;
@@ -64,6 +63,15 @@ public class SaveInFileRecords implements RecordRepository {
                 break;
             }
         }
+        return findRecord;
+    }
+
+    @Override
+    public Iterable<Record> filteredRecordsCurrentUser(String findText, User user) {
+        ArrayList <Record> findRecord = new ArrayList<>();
+        ArrayList<Record> recordsFindByUser = new ArrayList<>();
+        records.stream().filter(e->user.getId().equals(e.getUser().getId())).forEach(e->recordsFindByUser.add(e));
+        recordsFindByUser.stream().filter(e-> e.getLastname().contains(findText)|| e.getName().contains(findText)||e.getPhone().contains(findText)).forEach(e->findRecord.add(e));
         return findRecord;
     }
 
