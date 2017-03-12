@@ -22,24 +22,12 @@ public class SaveInFileRecords implements RecordRepository {
 
     @Override
     public Record save(Record record) {
+        if (record.getId()!=null) {
+            delete(record.getId());
+        }
         int size = records.size();
         if (size!=0) {
-            record.setId(new Long(1));
-            records.add(record);
-            wrire(fileName,records);
-            return  record;
-        }
-        ArrayList <Record> tempRecords = new ArrayList<>();
-        for (Record tempRecord: records) {
-            if (!record.getId().equals(tempRecord.getId())){
-                tempRecords.add(tempRecord);
-            }
-        }
-        records=tempRecords;
-        tempRecords=null;
-        size = records.size();
-        if (size!=0) {
-            record.setId(records.get(size-1).getId()+1);
+            record.setId(new Long(records.get(size-1).getId()+1));
         } else{
             record.setId(new Long(1));
         }
@@ -126,7 +114,7 @@ public class SaveInFileRecords implements RecordRepository {
             for (Record record:records ) {
                 String text = record.getId()+";"+record.getUser().getId()+";"+record.getLastname()+";"+
                         record.getName()+";"+record.getSurname()+";"+record.getPhone()+";"+
-                        record.getPhoneHome()+";"+record.getAdress()+";"+record.getEmail()+";";
+                        record.getPhoneHome()+";"+record.getAdress().replaceAll(";","")+";"+record.getEmail()+";";
                 writer.write(text);
                 writer.append('\n');
             }
