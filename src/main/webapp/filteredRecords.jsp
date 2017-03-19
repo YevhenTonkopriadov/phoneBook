@@ -9,7 +9,10 @@
     <title>Find Some Records </title>
 </head>
 <body>
-
+<c:if test="${empty records}">
+    <p> Nothing found with your entries</p>
+</c:if>
+<c:if test="${!empty records}">
 <table border="1">
     <tr>
         <th>Lastname</th>
@@ -32,12 +35,13 @@
         </tr>
     </c:forEach>
 </table>
+</c:if>
 <br>
-<spring:form method="POST" action="/logout">
-    <button type="submit">Logout</button>
-</spring:form>
-<spring:form method="GET" action="/">
+<form method="GET" action="/">
     <button type="submit">Main</button>
-</spring:form>
+</form>
+<form method="POST" action="/logout">
+    <button type="submit">Logout</button>
+</form>
 </body>
 </html>

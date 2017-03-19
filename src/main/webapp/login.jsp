@@ -22,8 +22,8 @@
     </div>
 
 </form>
-<spring:form method="GET" action="/registration">
+<form method="GET" action="/registration">
         <button type="submit">Registration</button>
-</spring:form>
+</form>
 </body>
 </html>

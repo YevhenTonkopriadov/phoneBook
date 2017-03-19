@@ -34,8 +34,8 @@
     <spring:button type="submit">Save</spring:button>
     <spring:button type="reset">Clear</spring:button>
 </spring:form>
-<spring:form method="GET" action="/login">
+<form method="GET" action="/login">
     <button type="submit">Start page</button>
-</spring:form>
+</form>
 </body>
 </html>

@@ -3,7 +3,6 @@
 <%@ taglib prefix="springForm" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
 <html>
 <head>
     <title>Title</title>
@@ -53,6 +52,7 @@
         <button type="submit">Save</button>
     </div>
 </spring:form>
+<c:if test="${!empty records}">
 <table border="1">
     <tr>
         <th>Lastname</th>
@@ -79,20 +79,21 @@
         </tr>
     </c:forEach>
 </table>
+</c:if>
 <br>
-<spring:form method="POST" commandName="text" action="/filteredRecords">
+<form method="POST" action="/filteredRecords">
     <table>
         <tr>
-            <td><spring:label path="findText"> Entered word (number) or same word's (numbers) divided with space what you want search:</spring:label></td>
-            <td><spring:input path="findText"/></td>
+            <td><label name="findText"> Entered word (number) or same word's (numbers) divided with space what you want search:</label></td>
+            <td><input name="findText"/></td>
         </tr>
     </table>
     <div>
         <button type="submit">Find</button>
     </div>
-</spring:form>
-<spring:form method="POST" action="/logout">
+</form>
+<form method="POST" action="/logout">
         <button type="submit">Logout</button>
-</spring:form>
+</form>
 </body>
 </html>
