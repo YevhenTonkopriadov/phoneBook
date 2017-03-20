@@ -28,7 +28,8 @@ import static org.mockito.Mockito.when;
  * Created by ellik on 20.03.2017.
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
+
 public class UserValidatorTest {
 
     @Mock
@@ -58,7 +59,19 @@ public class UserValidatorTest {
         userValidator.validate(userTest,errors);
         assertTrue(errors.hasErrors());
     }
-
+    @Test
+    public void testValidatePassword() throws Exception {
+        User userTest = new User();
+        String username = "test";
+        userTest.setUsername(username);
+        userTest.setPassword(username);
+        userTest.setConfirmPassword(username+" ");
+        when(userService.findByUsername(userTest.getUsername())).thenReturn(null);
+        Errors errors = new BeanPropertyBindingResult(userTest, "user");
+        ValidationUtils.invokeValidator(userValidator, userTest, errors);
+        userValidator.validate(userTest,errors);
+        assertTrue(errors.hasErrors());
+    }
     @Test
     public void testValidateUserFio () throws Exception {
         User user = new User();
