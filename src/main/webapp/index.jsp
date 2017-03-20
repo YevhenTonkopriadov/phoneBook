@@ -81,7 +81,7 @@
 </table>
 </c:if>
 <br>
-<form method="POST" action="/filteredRecords">
+<form method="POST" action="/filteredRecordsCurrentUsers">
     <table>
         <tr>
             <td><label name="findText"> Entered word (number) or same word's (numbers) divided with space what you want search:</label></td>

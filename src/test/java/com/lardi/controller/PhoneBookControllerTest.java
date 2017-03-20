@@ -17,10 +17,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -63,12 +61,13 @@ public class PhoneBookControllerTest {
         recordList.add(new Record());
         String findText ="";
         when(recordService.filteredRecordsCurrentUser("")).thenReturn((Iterable) recordList);
-        mockMvc.perform(post("/filteredRecords").param("findText", findText))
+        mockMvc.perform(post("/filteredRecordsCurrentUsers").param("findText", findText))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view ().name("filteredRecords"))
                 .andExpect(model().attribute("records",recordList));
     }
+
     @Test
     public void testIndex() throws Exception {
         List<Record> recordList = new ArrayList<Record>();
@@ -80,5 +79,17 @@ public class PhoneBookControllerTest {
                 .andExpect(view ().name("index"))
                 .andExpect(model().attribute("records",recordList));
     }
-
+   @Test
+    public void testCreateRecord() throws Exception{
+        Record record = new Record();
+        Record saveRecord = new Record();
+        saveRecord.setId(5L);
+        List<Record> recordList = new ArrayList<>();
+        recordList.add(saveRecord);
+        when(recordService.findAllRecordsCurrentUser()).thenReturn(recordList);
+        mockMvc.perform(post("/save").requestAttr("record",record))
+                .andExpect(status().isOk())
+                .andExpect(view().name("index"))
+                .andExpect(model().attribute("records",recordList));
+   }
 }

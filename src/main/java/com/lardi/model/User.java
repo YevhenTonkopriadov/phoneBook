@@ -22,7 +22,7 @@ public class User implements UserDetails, Serializable {
     @Pattern(regexp = "^[A-Za-z]+$")
     private String fio;
 
-    @Size (min =3, max =20)
+    @Size (min =5, max =20)
     @Pattern(regexp = "^[A-Za-z]+$")
     private String username;
 
@@ -119,13 +119,5 @@ public class User implements UserDetails, Serializable {
         if (!(o instanceof User)) return false;
         User user = (User) o;
         return this.getUsername().equals(user.getUsername());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getFio().hashCode();
-        result = result + getUsername().hashCode();
-        result = result + getPassword().hashCode();
-        return result;
     }
 }

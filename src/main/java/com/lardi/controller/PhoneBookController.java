@@ -84,7 +84,7 @@ public class PhoneBookController {
         return "index";
     }
 
-    @RequestMapping(path = "/filteredRecords", method = RequestMethod.POST)
+    @RequestMapping(path = "/filteredRecordsCurrentUsers", method = RequestMethod.POST)
     public String filteredRecords(@RequestParam String findText, Model model) {
         model.addAttribute("records", recordService.filteredRecordsCurrentUser(findText));
         return "filteredRecords";
